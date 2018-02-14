@@ -45,5 +45,14 @@ switch (MODE_AFFICHAGE)
                 break;
           }
 
+          // Affiche memoire restante
+        case 4:
+            {
+                  EcritureTimeLCD(now);
+                  EcritureLCD("Mem: ");
+                  lcd.setCursor(5,1) ;
+                  lcd.print(info);
+                  break;
+            }
     }
 }

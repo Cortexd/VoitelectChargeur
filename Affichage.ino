@@ -4,10 +4,10 @@
 void GestionAffichageMenu()
 {
 
-    
+
 switch (MODE_AFFICHAGE)
     {
-        //Affiche info demarrage
+        // Affiche info demarrage
         case 0:
           {
                 EcritureTimeLCD(now);
@@ -16,7 +16,7 @@ switch (MODE_AFFICHAGE)
                 adjuste_Time = DateTime(now.year(), now.month(), now.day(), now.hour(), now.minute(), 0);
                 break;
           }
-          
+
         // Reglage heure
         case 1:
           {
@@ -26,7 +26,7 @@ switch (MODE_AFFICHAGE)
                 break;
           }
 
-          
+
         // Reglage LCD
         case 2:
           {
@@ -36,7 +36,7 @@ switch (MODE_AFFICHAGE)
                 break;
           }
 
-          
+
         // Affiche date
         case 3:
           {
@@ -44,10 +44,6 @@ switch (MODE_AFFICHAGE)
                 EcritureDateLCD(now);
                 break;
           }
-          
+
     }
 }
-
-
-
-

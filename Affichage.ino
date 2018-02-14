@@ -4,6 +4,7 @@
 void GestionAffichageMenu()
 {
 
+   EcritureStatutRelais();
 
 switch (MODE_AFFICHAGE)
     {
@@ -11,7 +12,6 @@ switch (MODE_AFFICHAGE)
         case 0:
           {
                 EcritureTimeLCD(now);
-                EcritureStatutRelais();
                 EcritureLCD("Power Concoures");
                 adjuste_Time = DateTime(now.year(), now.month(), now.day(), now.hour(), now.minute(), 0);
                 break;

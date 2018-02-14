@@ -47,7 +47,7 @@ DateTime Fin2Ionic;
 
 // menu
 int MODE_AFFICHAGE;
-#define MAX_MODE_AFFICHAGE 3
+#define MAX_MODE_AFFICHAGE 4
 
 void setup ()
 {
@@ -68,7 +68,7 @@ void setup ()
     if (setFirstDateTime)
     {
         Serial.println("Mise en place heure");
-        if (RTC.isrunning()) 
+        if (RTC.isrunning())
         {
            Serial.println("Mise en place heure OK");
            RTC.adjust(DateTime(__DATE__, __TIME__)); // La ligne suivante fixe la date et l'heure du RTC avec les date et heure de compilation du sketch
@@ -83,9 +83,9 @@ void setup ()
     // INIT LCD
     lcd.begin(16, 2);
     // rétroéclairage 0->255
-    analogWrite(BACKLIGHT_PWM_PIN, backlight_niveau); 
+    analogWrite(BACKLIGHT_PWM_PIN, backlight_niveau);
 
-    // Menu 
+    // Menu
     MODE_AFFICHAGE = 0;
 
 }
@@ -103,4 +103,3 @@ void loop ()
   delay(200);
 
 }
-

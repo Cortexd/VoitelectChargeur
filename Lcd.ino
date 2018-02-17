@@ -19,12 +19,23 @@ void EcritureNiveauBackLight(byte level)
 
 void EcritureStatutRelais()
 {
-  // |10:10:10 M=M I=A|
+    // |10:10:10 M=M I=A|
+    // |10:10:10 FORCE  |
+    if (forceChargement)
+    {
+        lcd.setCursor(8,0); 
+  lcd.print(" FORCE  ");
+        }
+        else
+        {
+       // |10:10:10 M=M I=A|
   lcd.setCursor(8,0); 
   lcd.print(" M=");
   lcd.print(relay1Miev);
   lcd.print(" I=");
   lcd.print(relay2Ionic);
+   }
+   
 }
 
 void EcritureTimeLCD(DateTime MyDateAndTime)
@@ -35,6 +46,13 @@ void EcritureTimeLCD(DateTime MyDateAndTime)
     LcdPrint2Digits(MyDateAndTime.minute());
     sep();
     LcdPrint2Digits(MyDateAndTime.second());
+}
+
+void EcritureTimeLCDSecondeLigne(DateTime MyDateAndTime)
+{
+    LcdPrint2Digits(MyDateAndTime.hour());
+    lcd.print(":");
+    LcdPrint2Digits(MyDateAndTime.minute());
 }
 
 void EcritureTimeLCDFixe(DateTime MyDateAndTime)

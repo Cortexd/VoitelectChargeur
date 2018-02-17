@@ -6,7 +6,7 @@ void GestionAffichageMenu()
 
    EcritureStatutRelais();
 
-switch (MODE_AFFICHAGE)
+   switch (MODE_AFFICHAGE)
     {
         // Affiche info demarrage
         case 0:
@@ -17,8 +17,16 @@ switch (MODE_AFFICHAGE)
                 break;
           }
 
-        // Reglage heure
+        // force chargement
         case 1:
+         {
+                EcritureTimeLCD(now);
+                EcritureLCD("Forcer Chargement ?");
+                break;
+          }
+
+        // Reglage heure
+        case 2:
           {
                 //RTC.adjust(DateTime(2014, 1, 21, 23, 59, 50));
                 EcritureTimeLCDFixe(adjuste_Time);
@@ -28,7 +36,7 @@ switch (MODE_AFFICHAGE)
 
 
         // Reglage LCD
-        case 2:
+        case 3:
           {
                 EcritureTimeLCD(now);
                 EcritureLCD("Reglage LCD");
@@ -38,7 +46,7 @@ switch (MODE_AFFICHAGE)
 
 
         // Affiche date
-        case 3:
+        case 4:
           {
                 EcritureTimeLCD(now);
                 EcritureDateLCD(now);
@@ -46,13 +54,52 @@ switch (MODE_AFFICHAGE)
           }
 
           // Affiche memoire restante
-        case 4:
+        case 5:
             {
                   EcritureTimeLCD(now);
                   EcritureLCD("Mem: ");
                   lcd.setCursor(5,1) ;
-                  lcd.print(info);
+                  lcd.print(freeRam());
                   break;
             }
+
+         // Affiche Miev1
+        case 6:
+            {
+                  EcritureTimeLCD(now);
+                  EcritureLCD("MIEV1:");
+                  lcd.setCursor(6,1) ;
+                  EcritureTimeLCDSecondeLigne(Debut1Miev);
+                  break;
+            }
+         // Affiche Miev2
+        case 7:
+            {
+                  EcritureTimeLCD(now);
+                  EcritureLCD("MIEV2:");
+                  lcd.setCursor(6,1) ;
+                  EcritureTimeLCDSecondeLigne(Fin1Miev);
+                  break;
+            }
+         // Affiche Miev2
+        case 8:
+            {
+                  EcritureTimeLCD(now);
+                  EcritureLCD("IONIC1:");
+                  lcd.setCursor(7,1) ;
+                  EcritureTimeLCDSecondeLigne(Debut2Ionic);
+                  break;
+            }
+        // Affiche Miev2
+        case 9:
+            {
+                  EcritureTimeLCD(now);
+                  EcritureLCD("IONIC2:");
+                  lcd.setCursor(7,1) ;
+                  EcritureTimeLCDSecondeLigne(Fin2Ionic);
+                  break;
+            }
+
+
     }
 }

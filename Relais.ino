@@ -1,20 +1,40 @@
 
-
-void CalculDebutFin()
+/////////////////////////
+//  Regle relais 1 MIEV
+/////////////////////////
+void CheckFinForceChargement()
 {
-  // Tarif bleu 12Kw
-  // HC : 0.13kw/h
-  // Heure creuse : 22h30 -> 6h30
 
-  // Charge dure max 8H * 2.3kw =
-  // Indique la plage d'arret
-  Debut1Miev =  DateTime(now.year(), now.month(), now.day(), 9, 0, 0);
-  Fin1Miev =    DateTime(now.year(), now.month(), now.day(), 22, 35, 0);
+  if (forceChargement) 
+  {
+    if (!relay1Miev)
+    {
+      EcritureLCD("Activation MIEV ");
+      relay1Miev = true;
+      digitalWrite(relay1Pin, LOW);
+    }
+    if (!relay2Ionic)
+    {
+      EcritureLCD("Activation IONIC");
+      relay2Ionic = true;
+      digitalWrite(relay2Pin, LOW);
+    }
 
-  // Charge dure max 5H * 2.76kw =
-  Debut2Ionic = DateTime(now.year(), now.month(), now.day(), 1, 30, 0);
-  Fin2Ionic =   DateTime(now.year(), now.month(), now.day(), 9, 0, 0);
+    // Doit on arreter le forceCharge ?
+    // est on entre 9h00'00s et 9h00'10s
+    DateTime deb = DateTime(now.year(), now.month(), now.day(), 9, 0, 0);
+    DateTime fin = DateTime(now.year(), now.month(), now.day(), 9, 0, 10);
+    
+    bool test = IsBetween(now, deb, fin);
+    if (test)
+    {
+      forceChargement = false;
+    }
+    
+  }
+ 
 }
+
 
 
 /////////////////////////
@@ -25,7 +45,9 @@ void CheckRelais1()
 
   bool test = IsBetween(now, Debut1Miev, Fin1Miev);
 
-  if (test)
+  // 12h00 entre 9h -> 22H15 : true
+  // 00h00 entre 23h -> 9H : false
+ if (test)
   {
     //Serial.println("MIEV OFF");
     // DE activation uniquement si nécessaire
@@ -56,6 +78,8 @@ void CheckRelais2()
 {
    bool test = IsBetween(now, Debut2Ionic, Fin2Ionic);
 
+   // 12h00 entre 1h30h -> 9H : false
+   // 02h00 entre 1h30 -> 9H : true
   if (!test)
   {
     //Serial.println("IONIC OFF");

@@ -6,7 +6,7 @@ byte getPressedButton() {
 
   if (value < 1000)
         Serial.println(value);
-        
+
   /* Calcul l'état des boutons */
   if (value < 50)
     return BUTTON_RIGHT;
@@ -35,7 +35,7 @@ void GestionBouton()
         if (localKey != lastKeyPressed)
         {
             TraitementBouton(localKey);
-        } 
+        }
         else
         {
             // key value has not changed, key is being held down, has it been long enough?
@@ -55,67 +55,83 @@ void GestionBouton()
         }
     }
 }
-    
+
 void TraitementBouton(byte bout)
 {
-      
+
   switch (bout) {
-  
+
       case BUTTON_NONE:
         break;
-    
+
       ////////////////
       case BUTTON_UP:
-        
-        
-           if (MODE_AFFICHAGE == 1) // Ajuste horloge
+
+
+           if (MODE_AFFICHAGE == 2) // Ajuste horloge
            {
                 adjuste_Time = DateTime (adjuste_Time.unixtime() + 60);
            }
-           if (MODE_AFFICHAGE == 2) // Ajuste lcd
+           if (MODE_AFFICHAGE == 3) // Ajuste lcd
             {
                 backlight_niveau = backlight_niveau + 5;
-                analogWrite(BACKLIGHT_PWM_PIN, backlight_niveau); 
+                analogWrite(BACKLIGHT_PWM_PIN, backlight_niveau);
             }
-           
+
         break;
-    
+
       ///////////////////
       case BUTTON_DOWN:
-      
-            if (MODE_AFFICHAGE == 1) // Ajuste horloge
+
+            if (MODE_AFFICHAGE == 2) // Ajuste horloge
             {
                 adjuste_Time = DateTime (adjuste_Time.unixtime() - 60);
             }
-            if (MODE_AFFICHAGE == 2) // Ajuste lcd
+            if (MODE_AFFICHAGE == 3) // Ajuste lcd
             {
                 backlight_niveau = backlight_niveau - 5;
-                analogWrite(BACKLIGHT_PWM_PIN, backlight_niveau); 
+                analogWrite(BACKLIGHT_PWM_PIN, backlight_niveau);
             }
-            
+
+
         break;
-       
+
        //////////////////////
        case BUTTON_SELECT:
-            
-            if (MODE_AFFICHAGE == 1) // Ajuste horloge
+
+            if (MODE_AFFICHAGE == 2) // Ajuste horloge
             {
                 RTC.adjust(adjuste_Time);     // Enregistre
                 EcritureLCD("Changement ok"); // Affiche ok
                 delay(1000);                   // Attend
                 MODE_AFFICHAGE = 0;           // change sur le menu d'origine
             }
-            
-            
+            if (MODE_AFFICHAGE == 1) // Forcer chargement
+            {
+                if (forceChargement)
+                {
+                    forceChargement = false;
+                    EcritureLCD("Arret ok");
+                }
+                else
+                {
+                    forceChargement = true;
+                    EcritureLCD("Depart ok");
+                }
+                delay(2000);                   // Attend
+                MODE_AFFICHAGE = 0;           // change sur le menu d'origine
+            }
+
+
         break;
-    
-    
-      // Changement de menu gauche droite  
+
+
+      // Changement de menu gauche droite
       case BUTTON_RIGHT:
          {
             MODE_AFFICHAGE = MODE_AFFICHAGE + 1;
             if (MODE_AFFICHAGE > MAX_MODE_AFFICHAGE)
-            { 
+            {
                 MODE_AFFICHAGE = 0;
             }
             break;
@@ -124,15 +140,13 @@ void TraitementBouton(byte bout)
          {
             MODE_AFFICHAGE = MODE_AFFICHAGE - 1;
             if (MODE_AFFICHAGE < 0)
-            { 
+            {
                 MODE_AFFICHAGE = MAX_MODE_AFFICHAGE;
             }
             break;
          }
 
-  
+
   }
 
 }
-
-

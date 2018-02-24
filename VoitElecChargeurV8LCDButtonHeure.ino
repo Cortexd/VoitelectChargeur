@@ -99,16 +99,26 @@ void loop ()
 
   now = RTC.now();
   CalculDebutFin();
+
+  // Si force chargement
+  // Pas de vérif des timers
   if (!forceChargement)
   {
     CheckRelais1();
     CheckRelais2();
   }
 
-  CheckFinForceChargement();
+  // Gestion force chargement
+  CheckForceChargement();
 
   GestionBouton();
   GestionAffichageMenu();
-  delay(300);
+  delay(100);
 
+}
+
+
+unsigned long testMillis(){
+ 
+    return 0xFFFEB3F8 + millis() ;
 }

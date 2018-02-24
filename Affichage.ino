@@ -12,7 +12,7 @@ void GestionAffichageMenu()
         case 0:
           {
                 EcritureTimeLCD(now);
-                EcritureLCD("Power Concoures");
+                EcritureLCD("Power Concoures ");
                 adjuste_Time = DateTime(now.year(), now.month(), now.day(), now.hour(), now.minute(), 0);
                 break;
           }
@@ -21,7 +21,14 @@ void GestionAffichageMenu()
         case 1:
          {
                 EcritureTimeLCD(now);
-                EcritureLCD("Forcer Chargement ?");
+                if (forceChargement)
+                {
+                    EcritureLCD("Arreter Charge ?");
+                }
+                else
+                {
+                    EcritureLCD("Forcer Charge ? ");
+                }
                 break;
           }
 
@@ -30,7 +37,7 @@ void GestionAffichageMenu()
           {
                 //RTC.adjust(DateTime(2014, 1, 21, 23, 59, 50));
                 EcritureTimeLCDFixe(adjuste_Time);
-                EcritureLCD("Reglage Heure");
+                EcritureLCD("Reglage Heure   ");
                 break;
           }
 
@@ -39,7 +46,7 @@ void GestionAffichageMenu()
         case 3:
           {
                 EcritureTimeLCD(now);
-                EcritureLCD("Reglage LCD");
+                EcritureLCD("Reglage LCD     ");
                 EcritureNiveauBackLight(backlight_niveau);
                 break;
           }
@@ -57,6 +64,7 @@ void GestionAffichageMenu()
         case 5:
             {
                   EcritureTimeLCD(now);
+                  EcritureLCD("                ");
                   EcritureLCD("Mem: ");
                   lcd.setCursor(5,1) ;
                   lcd.print(freeRam());
@@ -67,7 +75,7 @@ void GestionAffichageMenu()
         case 6:
             {
                   EcritureTimeLCD(now);
-                  EcritureLCD("MIEV1:");
+                  EcritureLCD("MIEV1:          ");
                   lcd.setCursor(6,1) ;
                   EcritureTimeLCDSecondeLigne(Debut1Miev);
                   break;
@@ -76,7 +84,7 @@ void GestionAffichageMenu()
         case 7:
             {
                   EcritureTimeLCD(now);
-                  EcritureLCD("MIEV2:");
+                  EcritureLCD("MIEV2:          ");
                   lcd.setCursor(6,1) ;
                   EcritureTimeLCDSecondeLigne(Fin1Miev);
                   break;
@@ -85,7 +93,7 @@ void GestionAffichageMenu()
         case 8:
             {
                   EcritureTimeLCD(now);
-                  EcritureLCD("IONIC1:");
+                  EcritureLCD("IONIC1:         ");
                   lcd.setCursor(7,1) ;
                   EcritureTimeLCDSecondeLigne(Debut2Ionic);
                   break;
@@ -94,7 +102,7 @@ void GestionAffichageMenu()
         case 9:
             {
                   EcritureTimeLCD(now);
-                  EcritureLCD("IONIC2:");
+                  EcritureLCD("IONIC2:         ");
                   lcd.setCursor(7,1) ;
                   EcritureTimeLCDSecondeLigne(Fin2Ionic);
                   break;

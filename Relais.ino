@@ -1,39 +1,37 @@
 
 /////////////////////////
-//  Regle relais 1 MIEV
+//  Verif si on doit arreter le forcage
+//  Arret à 9H
 /////////////////////////
-void CheckFinForceChargement()
+void CheckForceChargement()
 {
+    // Si on est en forcé
+    if (forceChargement) 
+    {
+        // Si relais pas encore actif -> On active
+        if (!relay1Miev)
+        {
+            relay1Miev = true;
+            digitalWrite(relay1Pin, LOW);
+        }
+        if (!relay2Ionic)
+        {
+            relay2Ionic = true;
+            digitalWrite(relay2Pin, LOW);
+        }
 
-  if (forceChargement) 
-  {
-    if (!relay1Miev)
-    {
-      EcritureLCD("Activation MIEV ");
-      relay1Miev = true;
-      digitalWrite(relay1Pin, LOW);
-    }
-    if (!relay2Ionic)
-    {
-      EcritureLCD("Activation IONIC");
-      relay2Ionic = true;
-      digitalWrite(relay2Pin, LOW);
-    }
-
-    // Doit on arreter le forceCharge ?
-    // est on entre 9h00'00s et 9h00'10s
-    DateTime deb = DateTime(now.year(), now.month(), now.day(), 9, 0, 0);
-    DateTime fin = DateTime(now.year(), now.month(), now.day(), 9, 0, 10);
+        // Doit on arreter le forceCharge ?
+        // est on entre 9h00'00s et 9h00'10s
+        DateTime deb = DateTime(now.year(), now.month(), now.day(), 9, 0, 0);
+        DateTime fin = DateTime(now.year(), now.month(), now.day(), 9, 0, 10);
     
-    bool test = IsBetween(now, deb, fin);
-    if (test)
-    {
-      forceChargement = false;
+        bool test = IsBetween(now, deb, fin);
+        if (test)
+        {
+            forceChargement = false;
+        }
     }
-    
-  }
- 
-}
+ }
 
 
 
@@ -53,7 +51,6 @@ void CheckRelais1()
     // DE activation uniquement si nécessaire
     if (relay1Miev)
     {
-      EcritureLCD("Arret MIEV");
       relay1Miev = false;
       digitalWrite(relay1Pin, HIGH);
     }
@@ -64,7 +61,6 @@ void CheckRelais1()
     //  activation uniquement si nécessaire
     if (!relay1Miev)
     {
-      EcritureLCD("Activation MIEV ");
       relay1Miev = true;
       digitalWrite(relay1Pin, LOW);
     }
@@ -86,7 +82,6 @@ void CheckRelais2()
     // DE activation uniquement si nécessaire
     if (relay2Ionic)
     {
-      EcritureLCD("Arret IONIC");
       relay2Ionic = false;
       digitalWrite(relay2Pin, HIGH);
     }
@@ -97,7 +92,6 @@ void CheckRelais2()
     //  activation uniquement si nécessaire
     if (!relay2Ionic)
     {
-      EcritureLCD("Activation IONIC");
       relay2Ionic = true;
       digitalWrite(relay2Pin, LOW);
     }

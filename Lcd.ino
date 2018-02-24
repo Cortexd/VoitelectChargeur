@@ -1,8 +1,8 @@
 void EcritureLCD(String info)
 {
   //lcd.clear();
-  lcd.setCursor(0,1) ; //sets cursor to second line first row
-  lcd.print("                ");
+  //lcd.setCursor(0,1) ; //sets cursor to second line first row
+  //lcd.print("                ");
   lcd.setCursor(0,1) ;
   lcd.print(info);
 }
@@ -24,18 +24,17 @@ void EcritureStatutRelais()
     if (forceChargement)
     {
         lcd.setCursor(8,0); 
-  lcd.print(" FORCE  ");
-        }
-        else
-        {
+        lcd.print(" FORCE  ");
+    }
+    else
+    {
        // |10:10:10 M=M I=A|
-  lcd.setCursor(8,0); 
-  lcd.print(" M=");
-  lcd.print(relay1Miev);
-  lcd.print(" I=");
-  lcd.print(relay2Ionic);
+       lcd.setCursor(8,0); 
+       lcd.print(" M=");
+       lcd.print(relay1Miev);
+       lcd.print(" I=");
+       lcd.print(relay2Ionic);
    }
-   
 }
 
 void EcritureTimeLCD(DateTime MyDateAndTime)
@@ -83,7 +82,7 @@ void EcritureDateLCD(DateTime MyDateAndTime)
 /////////////////////////////////////
 char sep()
 {
-    unsigned long s = millis()/1000;
+    unsigned long s = testMillis()/1000L;
     if(s%2==0)
     {
         lcd.print(":");

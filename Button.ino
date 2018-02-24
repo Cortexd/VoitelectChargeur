@@ -28,9 +28,9 @@ void GestionBouton()
 
     // check for key presses
     // check for key presses
-    if (millis() > lastKeyCheckTime + keySampleRate)
+    if (testMillis() > lastKeyCheckTime + keySampleRate)
     {
-        lastKeyCheckTime = millis();
+        lastKeyCheckTime = testMillis();
         localKey = getPressedButton();
         if (localKey != lastKeyPressed)
         {
@@ -40,7 +40,7 @@ void GestionBouton()
         {
             // key value has not changed, key is being held down, has it been long enough?
             // (but don't process localKey = 0 = no key pressed)
-            if (localKey != 0 && millis() > lastKeyPressTime + keyRepeatRate)
+            if (localKey != 0 && testMillis() > lastKeyPressTime + keyRepeatRate)
             {
                 // yes, repeat this key
                 // changed: don't repeat left and right, they only change menu options
@@ -102,7 +102,7 @@ void TraitementBouton(byte bout)
             if (MODE_AFFICHAGE == 2) // Ajuste horloge
             {
                 RTC.adjust(adjuste_Time);     // Enregistre
-                EcritureLCD("Changement ok"); // Affiche ok
+                EcritureLCD("Changement ok   "); // Affiche ok
                 delay(1000);                   // Attend
                 MODE_AFFICHAGE = 0;           // change sur le menu d'origine
             }
@@ -111,12 +111,12 @@ void TraitementBouton(byte bout)
                 if (forceChargement)
                 {
                     forceChargement = false;
-                    EcritureLCD("Arret ok");
+                    EcritureLCD("Arret ok        ");
                 }
                 else
                 {
                     forceChargement = true;
-                    EcritureLCD("Depart ok");
+                    EcritureLCD("Depart ok       ");
                 }
                 delay(2000);                   // Attend
                 MODE_AFFICHAGE = 0;           // change sur le menu d'origine
